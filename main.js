@@ -1155,7 +1155,7 @@ function generateListHTML() {
             </div>
         </div>
         <br/>
-        <a href="https://github.com/kolos26/BetaGEOFS-LiverySelector/tree/main/tutorial" target="_blank"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button">Open Tutorial</button></a><br/>
+        <a href="https://github.com/AirplanesAviation2362/BetaGEOFS-LiverySelector/tree/main/tutorial" target="_blank"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button">Open Tutorial</button></a><br/>
         <a href="https://discord.gg/2tcdzyYaWU" target="_blank"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button">Join Our Discord</button></a><br/>
         <a href="https://github.com/AirplanesAviation2361/BetaGEOFS-LiverySelector" target="_blank"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button">Visit our Github page</button></a><br/>
         <a href="mailto:LiverySelector20220816@gmail.com" target="_blank"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button">Contact Us: LiverySelector20220816@gmail.com</button></a><br/>
@@ -1170,7 +1170,7 @@ function generatePanelButtonHTML() {
         title: 'Change livery',
         id: 'liverybutton',
         onclick: 'LiverySelector.togglePanel()',
-        class: 'mdl-button mdl-js-button geofs-f-standard-ui geofs-mediumScreenOnly',
+        class: 'mdl-button mdl-js-button Betageofs-f-standard-ui geofs-mediumScreenOnly',
         'data-toggle-panel': '.livery-list',
         'data-tooltip-classname': 'mdl-tooltip--top',
         'data-upgraded': ',MaterialButton'
@@ -1184,7 +1184,7 @@ function togglePanel() {
     const p = document.getElementById('listDiv');
     console.time('listLiveries');
 	try {
-    	p.dataset.ac != geofs.aircraft.instance.id && window.LiverySelector.listLiveries();
+    	p.dataset.ac != Betageofs.aircraft.instance.id && window.LiverySelector.listLiveries();
 	} catch (e) {
 		log(e, "error");
 	}
