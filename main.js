@@ -1,5 +1,5 @@
-const githubRepo = 'https://raw.githubusercontent.com/kolos26/GEOFS-LiverySelector/main';
-let jsDelivr = 'https://cdn.jsdelivr.net/gh/kolos26/GEOFS-LiverySelector@main';
+const githubRepo = 'https://raw.githubusercontent.com/Geofs-developer-team/BetaGEOFS-LiverySelector/main';
+let jsDelivr = 'https://cdn.jsdelivr.net/gh/kolos26/BetaGEOFS-LiverySelector@main';
 const noCommit = jsDelivr;
 const version = '3.4.1';
 
@@ -20,7 +20,7 @@ const log = (e, t = "log") => console[t]("%c[%cLivery%cSelector%c] %c", LOG_STYL
 (async function init() {
     // find latest commit to ensure the latest files are fetched from jsDelivr
     try {
-        const res = await fetch(`https://api.github.com/repos/kolos26/GEOFS-LiverySelector/commits/main`);
+        const res = await fetch(`https://api.github.com/repos/kolos26/BetaGEOFS-LiverySelector/commits/main`);
         if (!res.ok) jsDelivr = githubRepo;
         const commit = (await res.json()).sha;
         if (!/^[a-f0-9]{40}$/.test(commit)) jsDelivr = githubRepo;
@@ -38,7 +38,7 @@ const log = (e, t = "log") => console[t]("%c[%cLivery%cSelector%c] %c", LOG_STYL
     fetch(`${jsDelivr}/livery.json?` + Date.now()).then(handleLiveryJson);
     
     // Panel for list
-    const listDiv = appendNewChild(document.querySelector('.geofs-ui-left'), 'div', {
+    const listDiv = appendNewChild(document.querySelector('.Betageofs-ui-left'), 'div', {
         id: 'listDiv',
         class: 'geofs-list geofs-toggle-panel livery-list',
         'data-noblur': 'true',
@@ -53,13 +53,13 @@ const log = (e, t = "log") => console[t]("%c[%cLivery%cSelector%c] %c", LOG_STYL
 		if (target.nodeName === "I") return void window.LiverySelector.star(target); // if the element clicked is a star, run the star function
         const idx = parseInt(target.closest('li').getAttribute('data-idx')); // convert to int because attributes are stored as strings
         if (idx === void 0) return; // avoid livery selection when other stuff is pressed
-        const airplane = LiverySelector.liveryobj.aircrafts[geofs.aircraft.instance.id]
+        const airplane = LiverySelector.liveryobj.aircrafts[Betageofs.aircraft.instance.id]
         , livery = airplane.liveries[idx];
         livery.disabled || (loadLivery(livery.texture, airplane.index, airplane.parts, livery.materials),
         livery.mp != 'disabled' && setInstanceId(idx + (livery.credits?.toLowerCase() == 'geofs' ? 0 : LIVERY_ID_OFFSET)));
     }); // uses || (logical OR) to run the right side code only if livery.disabled is falsy
     livList.addEventListener('error', function(e) {
-		const defaultThumb = `${noCommit}/thumbs/${geofs.aircraft.instance.id}.png`;
+		const defaultThumb = `${noCommit}/thumbs/${Betageofs.aircraft.instance.id}.png`;
 		if (e.target.tagName !== 'IMG' || e.target.src === defaultThumb) return;
 		e.target.onerror = null;
 		e.target.src = defaultThumb;
