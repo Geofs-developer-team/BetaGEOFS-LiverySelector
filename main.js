@@ -493,8 +493,8 @@ function potatoSearch(text) {
     text = text.toLowerCase();
     for (let i = 0; i < liveries.length; i++) {
         const e = liveries[i]
-        , v = e.classList.contains('geofs-visible');
-		e.textContent.toLowerCase().includes(text) ? (v || e.classList.add('geofs-visible')) : (v && e.classList.remove('geofs-visible'));
+        , v = e.classList.contains('Betageofs-visible');
+		e.textContent.toLowerCase().includes(text) ? (v || e.classList.add('Betageofs-visible')) : (v && e.classList.remove('geofs-visible'));
     };
 }
 
@@ -503,7 +503,7 @@ function changeMaterial(name, color, type, partlist){
     let g = parseInt(color.substring(3, 5), 16) / 255
     let b = parseInt(color.substring(5, 7), 16) / 255
     partlist.forEach(part => {
-        geofs.aircraft.instance.definition.parts[part]['3dmodel']._model.getMaterial(name).setValue(type, new Cesium.Cartesian4(r, g, b, 1.0));
+        Betageofs.aircraft.instance.definition.parts[part]['3dmodel']._model.getMaterial(name).setValue(type, new Cesium.Cartesian4(r, g, b, 1.0));
     });
 }
 
@@ -608,8 +608,8 @@ function loadLiveryDirect(fileInput, i) {
         if (i === undefined) {
             loadLivery(Array(textures.length).fill(newTexture), airplane.index, airplane.parts);
         } else {
-            geofs.api.changeModelTexture(
-                geofs.aircraft.instance.definition.parts[airplane.parts[i]]["3dmodel"]._model,
+           Betageofs.api.changeModelTexture(
+                Betageofs.aircraft.instance.definition.parts[airplane.parts[i]]["3dmodel"]._model,
                 newTexture,
                 { index: airplane.index[i] }
             );
@@ -796,11 +796,11 @@ function removeAirline(url) {
  * @returns {object} current aircraft from liveryobj
  */
 function getCurrentAircraft() {
-    return liveryobj.aircrafts[geofs.aircraft.instance.id];
+    return liveryobj.aircrafts[Betageofs.aircraft.instance.id];
 }
 
 function setInstanceId(id) {
-    geofs.aircraft.instance.liveryId = id;
+    Betageofs.aircraft.instance.liveryId = id;
 }
 
 async function updateMultiplayer() {
@@ -1087,25 +1087,25 @@ function generateListHTML() {
     return `
         <h3><img src="${noCommit}/liveryselector-logo.svg" class="livery-title" title="LiverySelector" /></h3>
 
-        <div class="livery-searchbar mdl-textfield mdl-js-textfield geofs-stopMousePropagation geofs-stopKeyupPropagation">
+        <div class="livery-searchbar mdl-textfield mdl-js-textfield Betageofs-stopMousePropagation Betageofs-stopKeyupPropagation">
             <input class="mdl-textfield__input address-input" type="text" placeholder="Search liveries" onkeyup="LiverySelector.search(this.value)" id="searchlivery">
             <label class="mdl-textfield__label" for="searchlivery">Search liveries</label>
 			<button class="potato-mode-search">search</button>
         </div>
 		<div style="width: 100%">
-			<span>Potato mode: </span><input id="livery-potato-mode" data-gespref="geofs.preferences.liveryPotato" type="checkbox"></input>
+			<span>Potato mode: </span><input id="livery-potato-mode" data-gespref="Betageofs.preferences.liveryPotato" type="checkbox"></input>
 		</div>
         <h6 onclick="LiverySelector.toggleDiv('favorites')">Favorited Liveries</h6>
-        <ul id="favorites" class="geofs-list geofs-visible"></ul>
+        <ul id="favorites" class="Betageofs-list Betageofs-visible"></ul>
 
         <h6 onclick="LiverySelector.toggleDiv('liverylist')">Available Liveries</h6>
-        <ul id="liverylist" class="geofs-list geofs-visible"></ul>
+        <ul id="liverylist" class="Betageofs-list Betageofs-visible"></ul>
 
         <h6 onclick="LiverySelector.toggleDiv('airlinelist')">Virtual Airlines</h6><button class="mdl-button mdl-js-button mdl-button--raised mdl-button" style="background-color: #096628; color: white;" onclick="LiverySelector.addAirline()">+ Add Airline</button>
-        <ul id="airlinelist" class="geofs-list geofs-visible"></ul>
+        <ul id="airlinelist" class="Betageofs-list Betageofs-visible"></ul>
 
         <h6 onclick="LiverySelector.toggleDiv('customDiv')" class="closed">Load External Liveries</h6>
-        <div id="customDiv" class="mdl-textfield mdl-js-textfield geofs-stopMousePropagation geofs-stopKeyupPropagation" style="display:none;">
+        <div id="customDiv" class="mdl-textfield mdl-js-textfield Betageofs-stopMousePropagation Betageofs-stopKeyupPropagation" style="display:none;">
             <ul class="livery-custom-tabs" onclick="LiverySelector.handleCustomTabs()">
                 <li>Upload</li>
                 <li>Direct</li>
@@ -1116,9 +1116,9 @@ function generateListHTML() {
                 <div>Paste URL or upload image to generate ImgBB URL</div>
                 <div class="upload-fields"></div>
                 <div><button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" onclick="LiverySelector.inputLivery()">Load livery</button></div>
-                <div class="livery-submit geofs-list-collapsible-item">Contribute to the LiverySelector Database
-                    <div class="geofs-collapsible no-api">-&gt; Enter your ImgBB API Key and Discord User ID in the API tab.</div>
-                    <div class="geofs-collapsible api">
+                <div class="livery-submit Betageofs-list-collapsible-item">Contribute to the LiverySelector Database
+                    <div class="Betageofs-collapsible no-api">-&gt; Enter your ImgBB API Key and Discord User ID in the API tab.</div>
+                    <div class="Betageofs-collapsible api">
                         <label for="livery-submit-liveryname">Livery Name</label>
                         <input type="text" id="livery-submit-liveryname" class="mdl-textfield__input address-input">
                         <label for="livery-submit-credits">Author</label>
@@ -1155,9 +1155,9 @@ function generateListHTML() {
             </div>
         </div>
         <br/>
-        <a href="https://github.com/kolos26/GEOFS-LiverySelector/tree/main/tutorial" target="_blank"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button">Open Tutorial</button></a><br/>
+        <a href="https://github.com/kolos26/BetaGEOFS-LiverySelector/tree/main/tutorial" target="_blank"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button">Open Tutorial</button></a><br/>
         <a href="https://discord.gg/2tcdzyYaWU" target="_blank"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button">Join Our Discord</button></a><br/>
-        <a href="https://github.com/kolos26/GEOFS-LiverySelector" target="_blank"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button">Visit our Github page</button></a><br/>
+        <a href="https://github.com/AirplanesAviation2361/BetaGEOFS-LiverySelector" target="_blank"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button">Visit our Github page</button></a><br/>
         <a href="mailto:LiverySelector20220816@gmail.com" target="_blank"><button class="mdl-button mdl-js-button mdl-button--raised mdl-button">Contact Us: LiverySelector20220816@gmail.com</button></a><br/>
 `;
 }
