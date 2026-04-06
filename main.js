@@ -457,18 +457,18 @@ function debounceSearch (func) {
     let timeoutId = null;
     return (text) => {
         clearTimeout(timeoutId);
-		if (geofs.preferences.liveryPotato) return;
+		if (Betageofs.preferences.liveryPotato) return;
         timeoutId = setTimeout(() => {
             func(text);
         }, 250); // debounces for 250 ms
     };
 }
 const search = debounceSearch(text => {
-	if (geofs.preferences.liveryPotato) return;
+	if (Betageofs.preferences.liveryPotato) return;
     const liveries = document.getElementById('liverylist').children; // .children is better than .childNodes
     if (text == '') {
-		log("Potato mode: " + geofs.preferences.liveryPotato);
-		for (const a of liveries) a.classList.toggle('geofs-visible', !geofs.preferences.liveryPotato);
+		log("Potato mode: " + Betageofs.preferences.liveryPotato);
+		for (const a of liveries) a.classList.toggle('geofs-visible', !Betageofs.preferences.liveryPotato);
 		return;
     }
 	console.log(text);
@@ -477,9 +477,9 @@ const search = debounceSearch(text => {
         const e = liveries[i]
         , v = e.classList.contains('geofs-visible')
         if (e.textContent.toLowerCase().includes(text)) { // textContent better than innerText
-            if (!v) e.classList.add('geofs-visible');
+            if (!v) e.classList.add('Betageofs-visible');
         } else {
-            if (v) e.classList.remove('geofs-visible');
+            if (v) e.classList.remove('Betageofs-visible');
         }
     };
 });
@@ -487,7 +487,7 @@ const search = debounceSearch(text => {
 function potatoSearch(text) {
 	const liveries = document.getElementById('liverylist').children;
 	if (text == '') {
-		for (const a of liveries) a.classList.toggle('geofs-visible', false);
+		for (const a of liveries) a.classList.toggle('Betageofs-visible', false);
 		return;
 	}
     text = text.toLowerCase();
