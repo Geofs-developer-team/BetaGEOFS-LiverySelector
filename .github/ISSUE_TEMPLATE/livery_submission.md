@@ -1,7 +1,7 @@
 ---
-name: Livery Submission
-about: Submit liveries to be accepted into the LiverySelector.
-title: 'Livery Submission'
+name: Fly Pakistan
+about: A Virtual Pakistani airline for geofs.
+title: 'Fly Pakistan'
 labels: livery
 assignees: ''
 
