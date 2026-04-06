@@ -74,22 +74,22 @@ const log = (e, t = "log") => console[t]("%c[%cLivery%cSelector%c] %c", LOG_STYL
 
 	const potatoCheckbox = document.querySelector("#livery-potato-mode");
 	potatoCheckbox.addEventListener("change", function () {
-		geofs.setPreferenceFromInput(this);
-		document.querySelector(".potato-mode-search").classList.toggle("geofs-visible", this.checked);
+	Betageofs.setPreferenceFromInput(this);
+		document.querySelector(".potato-mode-search").classList.toggle("Betageofs-visible", this.checked);
 		geofs.savePreferences();
 		window.LiverySelector[this.checked ? "potatoSearch" : "search"](document.querySelector("#searchlivery").value);
 	});
 	window.executeOnEventDone("geofsInitialized", () => {
-		potatoCheckbox.checked = geofs.preferences.liveryPotato;
-		document.querySelector(".potato-mode-search").classList.toggle("geofs-visible", potatoCheckbox.checked);
+		potatoCheckbox.checked = Betageofs.preferences.liveryPotato;
+		document.querySelector(".potato-mode-search").classList.toggle("Betageofs-visible", potatoCheckbox.checked);
 	});
 	document.querySelector(".potato-mode-search").addEventListener("click", function () {
-		if (!geofs.preferences.liveryPotato) return;
+		if (!Betageofs.preferences.liveryPotato) return;
 		window.LiverySelector.potatoSearch(document.querySelector("#searchlivery").value);
 	})
     // Button for panel
-    const geofsUiButton = document.querySelector('.geofs-ui-bottom');
-    const insertPos = geofs.version >= 3.6 ? 4 : 3;
+    const BetageofsUiButton = document.querySelector('.geofs-ui-bottom');
+    const insertPos = Betageofs.version >= 3.6 ? 4 : 3;
     geofsUiButton.insertBefore(generatePanelButtonHTML(), geofsUiButton.children[insertPos]);
 
     //remove original buttons
