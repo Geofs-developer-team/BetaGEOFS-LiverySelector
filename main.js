@@ -90,10 +90,10 @@ const log = (e, t = "log") => console[t]("%c[%cLivery%cSelector%c] %c", LOG_STYL
     // Button for panel
     const BetageofsUiButton = document.querySelector('.geofs-ui-bottom');
     const insertPos = Betageofs.version >= 3.6 ? 4 : 3;
-    geofsUiButton.insertBefore(generatePanelButtonHTML(), geofsUiButton.children[insertPos]);
+    BetageofsUiButton.insertBefore(generatePanelButtonHTML(), BetageofsUiButton.children[insertPos]);
 
     //remove original buttons
-    const origButtons = document.getElementsByClassName('geofs-liveries geofs-list-collapsible-item');
+    const origButtons = document.getElementsByClassName('Betageofs-liveries Betageofs-list-collapsible-item');
     Object.values(origButtons).forEach(btn => btn.parentElement.removeChild(btn));
 
     //Init airline databases
@@ -112,7 +112,7 @@ const log = (e, t = "log") => console[t]("%c[%cLivery%cSelector%c] %c", LOG_STYL
     setInterval(updateMultiplayer, 5000);
 
     window.addEventListener("keyup", function (e) {
-        if (e.target.classList.contains("geofs-stopKeyupPropagation")) {
+        if (e.target.classList.contains("Betageofs-stopKeyupPropagation")) {
             e.stopImmediatePropagation();
         }
         if (e.key === "l") {
@@ -133,7 +133,7 @@ async function handleLiveryJson(data) {
     if (liveryobj.version != version) {
         document.querySelector('.livery-list h3').appendChild(
             createTag('a', {
-                href: 'https://github.com/kolos26/GEOFS-LiverySelector/releases/latest',
+                href: 'https://github.com/kolos26/BetaGEOFS-LiverySelector/releases/latest',
                 target: '_blank',
                 style: 'display:block;width:100%;text-decoration:none;text-align:center;'
             }, 'Update available: ' + liveryobj.version)
@@ -173,7 +173,7 @@ async function handleLiveryJson(data) {
 }
 
 /**
- * Triggers GeoFS API to load texture
+ * Triggers BetaGeoFS API to load texture
  *
  * @param {string[]} texture
  * @param {number[]} index
@@ -183,7 +183,7 @@ async function handleLiveryJson(data) {
 function loadLivery(texture, index, parts, mats) {
     //change livery
     for (let i = 0; i < texture.length; i++) {
-        const model3d = geofs.aircraft.instance.definition.parts[parts[i]]['3dmodel'];
+        const model3d = Betageofs.aircraft.instance.definition.parts[parts[i]]['3dmodel'];
         // check for material definition (for untextured parts)
         if (typeof texture[i] === 'object') {
             if (texture[i].material !== undefined) {
@@ -194,15 +194,15 @@ function loadLivery(texture, index, parts, mats) {
             continue;
         }
 		try {
-	        if (geofs.version == 2.9) {
-	            geofs.api.Model.prototype.changeTexture(texture[i], index[i], model3d);
-	        } else if (geofs.version >= 3.0 && geofs.version <= 3.7) {
-	            geofs.api.changeModelTexture(model3d._model, texture[i], index[i]);
+	        if (Betageofs.version == 2.9) {
+	            Betageofs.api.Model.prototype.changeTexture(texture[i], index[i], model3d);
+	        } else if (Betageofs.version >= 3.0 && Betageofs.version <= 3.7) {
+	            Betageofs.api.changeModelTexture(model3d._model, texture[i], index[i]);
 	        } else {
-	            geofs.api.changeModelTexture(model3d._model, texture[i], { index: index[i] });
+	            Betageofs.api.changeModelTexture(model3d._model, texture[i], { index: index[i] });
 	        }
 		} catch (error) {
-			geofs.api.notify("Hmmm... we can't find this livery, check the console for more info.");
+			Betageofs.api.notify("Hmmm... we can't find this livery, check the console for more info.");
 			(error, "error");
 		}
     }
@@ -341,7 +341,7 @@ function listLiveries() {
     const livList = $('#liverylist').html('');
     const tempFrag = document.createDocumentFragment()
     , thumbsDir = noCommit + '/thumbs'
-    , acftId = geofs.aircraft.instance.id
+    , acftId = Betageofs.aircraft.instance.id
     , airplane = getCurrentAircraft(); // chained variable declarations
     $('#listDiv').attr('data-ac', acftId); // tells us which aircraft's liveries are loaded
     for (let i = 0; i < airplane.liveries.length; i++) {
@@ -349,7 +349,7 @@ function listLiveries() {
         if (e.disabled) continue;
         const listItem = $('<li/>', {id: [acftId, e.name, 'button'].join('_'), class: 'livery-list-item', "data-idx": i});
         listItem.append($('<span/>').text(e.name));
-        listItem.toggleClass('offi', acftId < 100).toggleClass("geofs-visible", !geofs.preferences.liveryPotato); // if param2 is true, it'll add 'offi', if not, it will remove 'offi'
+        listItem.toggleClass('offi', acftId < 100).toggleClass("Betageofs-visible", !Betageofs.preferences.liveryPotato); // if param2 is true, it'll add 'offi', if not, it will remove 'offi'
 		acftId < 1000 && listItem.append($('<img/>', {loading: 'lazy', src: [thumbsDir, acftId, acftId + '-' + e.idx + '.png'].join('/')}));
         e.credits && e.credits.length && $('<small/>').text(`by ${e.credits}`).appendTo(listItem);
         $('<i/>', { id: acftId + "_" + e.name }).appendTo(listItem);
@@ -365,7 +365,7 @@ function loadFavorites() {
 	const favorites = localStorage.getItem('favorites') ?? (localStorage.setItem('favorites', ''), ''); // sets favourites to '' if they can't be found and initialises localStorage.favorites
     $("#favorites").empty();
     const list = favorites.split(',');
-    const airplane = geofs.aircraft.instance.id;
+    const airplane = Betageofs.aircraft.instance.id;
     list.forEach(function (e) {
         if ((airplane == e.slice(0, airplane.length)) && (e.charAt(airplane.length) == '_')) {
             star(domById(e));
@@ -388,10 +388,10 @@ function loadAirlines() {
             onclick: `LiverySelector.removeAirline("${airline.url}")`
         });
         removebtn.innerText = "- Remove airline";
-        if (Object.keys(airline.aircrafts).includes(geofs.aircraft.instance.id)) {
-            airline.aircrafts[geofs.aircraft.instance.id].liveries.forEach(function (e, i) {
+        if (Object.keys(airline.aircrafts).includes(Betageofs.aircraft.instance.id)) {
+            airline.aircrafts[Betageofs.aircraft.instance.id].liveries.forEach(function (e, i) {
                 let listItem = appendNewChild(domById('airlinelist'), 'li', {
-                    id: [geofs.aircraft.instance.id, e.name, 'button'].join('_'),
+                    id: [Betageofs.aircraft.instance.id, e.name, 'button'].join('_'),
                     class: 'livery-list-item'
                 });
                 if ((textures.filter(x => x === textures[0]).length === textures.length) && textures.length !== 1) { // the same texture is used for all indexes and parts
