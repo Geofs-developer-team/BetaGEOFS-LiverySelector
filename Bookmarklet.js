@@ -1,0 +1,1 @@
+javascript:(() => {var realismScript = document.createElement('script'); realismScript.src="https://raw.githack.com/AirplanesAviation2361/BetaGEOFS-LiverySelector/main/main.js";document.body.appendChild(realismScript);realismScript.onload = (function(){realismGo()});})()
